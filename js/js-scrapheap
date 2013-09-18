@@ -1,0 +1,294 @@
+// google fonts
+/*
+Concert One
+Aladin
+Salsa
+Knewave
+Skranji (fave)
+*/
+
+// Test Inputs
+
+// Buggy input (Joe gets a flush)
+// note: only seems to affect Joe (1st player?!?!?!)
+Joe 10S, 4H, 5H, 6H, 8H
+Bob 3C, 3D, 3S, 8C, 10D
+Sally AC, 10C, 5C, 2S, 2C
+
+// 10S is culprit?
+// See suits switch statement?
+
+Joe 3H, 10S, 5H, 6H, 8H
+Bob 3C, 3D, 3S, 8C, 10D
+Sally AC, 10C, 5C, 2S, 2C
+
+// buggy (joe gets highest card, not always)
+Joe qh, qd, qs, qc, 5h
+Bob 3C, 3D, 3S, 8C, 10D
+Sally AC, 10C, 5C, 2S, 2C
+
+// but this works (Joe gets Highest Card)
+Joe jc, 4H, 5H, 6H, 8H
+Bob 3C, 3D, 3S, 8C, 10D
+Sally AC, 10C, 5C, 2S, 2C
+
+// also good
+Joe 6c, 4H, 5H, 6H, 8H
+Bob 3C, 3D, 3S, 8C, 10D
+Sally AC, 10C, 5C, 2S, 2C
+
+//-------------------------
+
+Joe 3H, 4H, 5H, 6H, 8H
+Bob 3C, 3D, 3S, 8C, 10D
+Sally AC, 10C, 5C, 2S, 2C
+
+//-------------------------
+
+Joe 3C, 3D, 3S, 8C, 10D
+Bob 3H, 4H, 5H, 6H, 8H
+Sally AC, 10C, 5C, 2S, 2C
+
+//-------------------------
+
+Joe 3C, 3D, 3S, 8C, 10D
+Bob AC, 10C, 5C, 2S, 2C
+Sally 3H, 4H, 5H, 6H, 8H
+
+//-------------------------
+
+Joe 3C, 4D, 3S, 8C, 10D
+Bob AC, 10C, 5C, 2S, 2C
+Sally 3H, 4H, 5H, 6H, 8H
+
+
+// Scrapyard
+
+ this.findWinner = function(){
+            
+            // loop through hands
+            // 1. anybody have a flush?
+            //      1) anybody else have a flush?
+            //      2) if NO, then WINNER and END
+            //          1) see END sub-routine
+            //      3) if YES, get all FLUSH Holders
+            //          1) Loop through FLUSH Holders and find HIGHEST RANK
+            //              1) See Find Highest Rank Sub-Routine
+            //          2) WINNER holds HIGHEST RANKED HAND and END
+            // 2. repeat previous for each Hand Category (in descending order)
+            // 
+            // END sub-routine
+            // set winning player, return that player's name
+            //
+            // FIND HIGHEST RANKED HAND sub-routine
+            // Simple, brute force method
+            // 1. Loop through CARDS list from HIGHEST to LOWEST (A, K, Q, J, 10...)
+            //      1. If Player has Card, player wins
+            //          2. EXCEPTION: A used as a "1" in a Flush
+
+            // Five Card Poker Lingo
+            // Hand
+            //      five cards
+            // Hand Categories
+            //      type of hand (ie straight flush, four of a kind etc) 
+            // Hand Ranking
+            //      based on highest ranked card in hand (A, K, Q, J, 10...)
+            //      exception: A can be highest or lowest, depending on hand category
+
+            var totalPlayers = players.length,
+                playerHand = "",
+                j = 0,
+                i = 0;
+
+            //alert("totalPlayers: " + totalPlayers);
+
+            for(i = 0; i < totalPlayers; i++){
+
+                alert("i: " + i);
+
+                playerHand = players[i].getHandType();
+
+                alert(playerHand);
+
+                /*
+                 switch(playerHand){
+                    case "flush":
+                      contenders2DArr[0][i] = players[i];
+                      break;
+                    case "four of a kind":
+                      contenders2DArr[1][i] = players[i];
+                      break;
+                    case "three of a kind":
+                      contenders2DArr[2][i] = players[i];
+                      break;
+                    case "two of a kind":
+                      contenders2DArr[3][i] = players[i];
+                      break;
+                    case "highest card":
+                      contenders2DArr[4][i] = players[i];
+                      break;
+                    default:
+                        alert("Ruh-oh! Something spooky in contenders 2D array");
+                }
+                */
+            }
+
+            // start with strongest hand, does anybody have it (flush)?
+            //  - if just 1, then winner
+            //  - if > 1, find hand rank
+            // if nobody has strongest hand, does anybody have next strongest hand
+
+            //alert("hello from findWinner - pre 2D array walk");
+
+            /*
+            for(i = 0; i < contenders2DArr.length; i++){
+    
+                for(j = 0; j < contenders2DArr[i][j].length; j++){
+                    
+                    if(i === 0){
+                        console.log(contenders2DArr[i][j].getPlayerName() + " has a flush");                        
+                    }
+                    else if(i === 1){
+                        console.log(contenders2DArr[i][j].getPlayerName() + " has four of a kind");
+                    }
+                    else if(i === 2){
+                        console.log(contenders2DArr[i][j].getPlayerName() + " has three of a kind");
+                    }
+                    else if(i === 3){
+                        console.log(contenders2DArr[i][j].getPlayerName() + " has two of a kind");
+                    }
+                    else if(i === 4){
+                        console.log(contenders2DArr[i][j].getPlayerName() + " has highest card");
+                    }
+
+                }
+            } */
+
+
+
+
+            //alert("2 hullo?");
+            //console.log(players[0].getHandType());
+
+            // anybody got a flush?
+            //   - if only one, winner
+            //   - if two or more flushes, resolve tie
+            //   - otherwise next hand option
+
+            // These results different than those in reviewGame !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // Calling getHandType multiple times affects result
+
+            // Player name and hand contents correct
+            /*
+            console.log(i + " " + players[i].getPlayerName());
+            console.log(i + " " + players[i].seeHand());
+            console.log(i + " " + players[i].getHandType());
+
+            console.log(i + " " + players[i].getPlayerName());
+            console.log(i + " " + players[i].seeHand());
+            console.log(i + " " + players[i].getHandType());
+            */
+          
+
+        };
+    },
+
+
+/* Sample input:
+Joe 3H, 4H, 5H, 6H, 8H
+Bob 3C, 3D, 3S, 8C, 10D
+Sally AC, 10C, 5C, 2S, 2C
+
+SCRAPS
+
+switch(players[i].getHandType()){
+                    case "flush":
+                      contenders[0]++;
+                      break;
+                    case "four of a kind":
+                        contenders[1]++;
+                        break;
+                    case "three of a kind":
+                      contenders[2]++;
+                      break;
+                    case "two of a kind":
+                      contenders[3]++;
+                      break;
+                    case "highest card":
+                      contenders[3]++;
+                      break;
+                    default:
+                        alert("Ruh-oh! Something spooky in contenders");
+                }
+
+            
+            for(i = 0; i < players.length; i++){                            
+
+                if(players[i].getHandType() === "flush"){
+
+                    contenders.push(players[i]);
+                }
+                else if(players[i].getHandType() === "four of a kind"){
+
+                    contenders.push(players[i]);
+                }
+                else if(players[i].getHandType() === "three of a kind"){
+
+                    contenders.push(players[i]);
+                }
+                else if(players[i].getHandType() === "two of a kind"){
+
+                    contenders.push(players[i]);
+                }
+                else if(players[i].getHandType() === "highest card"){
+
+                    contenders.push(players[i]);
+                }
+                else{
+                    
+                }       
+            }
+
+            
+            if(contenders.length === 1){
+
+                    alert("hullo? contenders length is 1");
+
+                    winner = contenders[0].getPlayerName();
+                }
+                else{
+                    // challenge round
+
+                    alert("hullo? contenders length is not 1 but " + contenders.length);
+
+                    this.reviewGame();
+                }
+
+            console.log(winner)
+
+            return winner;
+
+
+
+            // anybody got four of a kind?
+            //   - if only one, winner
+            //   - if two or more flushes, resolve tie
+            //   - otherwise next hand option
+
+            // anybody got three of a kind?
+            //   - if only one, winner
+            //   - if two or more flushes, resolve tie
+            //   - otherwise next hand option
+
+            // anybody got a pair?
+            //   - if only one, winner
+            //   - if two or more flushes, resolve tie
+            //   - otherwise next hand option
+
+            // anybody got high card?
+            //   - if only one, winner
+            //   - if two or more flushes, resolve tie
+            //   - otherwise next hand option                  
+
+
+*/
