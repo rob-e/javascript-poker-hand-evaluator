@@ -1,0 +1,27 @@
+Hello World!
+
+Kidding aside, like the repo description says this is a rough, or simple, or even utterly simple, JavaScript library which evaluates the winner, or winners, among several 5 card Poker hands. Note, however, that it only handles a subset of the regular poker hands. More specifically:
+
+- Flush
+- Four of a Kind
+- Three of a Kind
+- Two of a Kind (Pair)
+- High Card
+
+INPUTS
+Collection of game players and their hands
+- Player Name
+- 5 Cards (specify the number and suit of each card)
+    
+OUTPUT
+Collection of winning players (more than one in case of a tie)
+
+EXAMPLE
+
+Input
+Joe, 3H, 4H, 5H, 6H, 8H</li>
+Bob, 3C, 3D, 3S, 8C, 10D</li>
+Sally, AC, 10C, 5C, 2S, 2C</li>
+
+OUTPUT
+Joe
